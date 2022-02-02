@@ -1,6 +1,6 @@
 const yargs = require("yargs");
 const { client, connection } = require("./db/connection");
-const { addMovie, findMovie } = require("./utils/index");
+const { addMovie, findMovie, findOneMovie } = require("./utils/index");
 
 const app = async (yargsObj) => {
 	try {
@@ -19,14 +19,19 @@ const app = async (yargsObj) => {
 			await findMovie(collection);
 		}
 
-		// FIND MOVIE BY TITLE
+		// FIND MOVIE BY TITLE (--find --title="")
 		else if (yargsObj.find_title) {
 			await findMovie(collection, {title: yargsObj.title});
 		}
 
-		// FIND MOVIE BY ACTOR
+		// FIND MOVIE BY ACTOR (--find --actor="")
 		else if (yargsObj.find_actor) {
 			await findMovie(collection, {actor: yargsObj.actor});
+		}
+
+		// FIND ONE MOVIE (--find_one)
+		else if (yargsObj.find_one) {
+			await findOneMovie(collection);
 		}
 		
 		// INCORRECT COMMAND
